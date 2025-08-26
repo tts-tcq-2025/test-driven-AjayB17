@@ -64,3 +64,17 @@ void testNumbersOver1000Ignored() {
     assert(StringCalculator::Add("1000,1001,1002,3") == 1003);
     std::cout << "Test passed: Numbers >1000 ignored\n";
 }
+
+int main() {
+    testEmptyStringReturnsZero();
+    testSingleNumber();
+    testTwoNumbers();
+    testUnknownAmountOfNumbers();
+    testNewlinesAsDelimiters();
+    testCustomSingleCharDelimiter();
+    testCustomMultiCharDelimiter();
+    testMultipleCustomDelimiters();
+    testNegativeNumbersThrow();
+    testNumbersOver1000Ignored();
+    return 0;
+}
