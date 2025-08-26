@@ -113,16 +113,3 @@ private:
         return tokens;
     }
 };
-int main() {
-    testEmptyStringReturnsZero();
-    testSingleNumber();
-    testTwoNumbers();
-    testUnknownAmountOfNumbers();
-    testNewlinesAsDelimiters();
-    testCustomSingleCharDelimiter();
-    testCustomMultiCharDelimiter();
-    testMultipleCustomDelimiters();
-    testNegativeNumbersThrow();
-    testNumbersOver1000Ignored();
-    return 0;
-}
