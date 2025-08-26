@@ -1,4 +1,9 @@
-
+#include <cassert>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stdexcept>
+#include <sstream>
 
 void testEmptyStringReturnsZero() {
     assert(StringCalculator::Add("") == 0);
