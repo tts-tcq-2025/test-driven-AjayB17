@@ -4,7 +4,7 @@
 #include <vector>
 #include <stdexcept>
 #include <sstream>
-#include "test_cpp.h"
+
 
 class StringCalculator {
 public:
