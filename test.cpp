@@ -4,6 +4,7 @@
 #include <vector>
 #include <stdexcept>
 #include <sstream>
+#include "test_cpp.h"
 
 void testEmptyStringReturnsZero() {
     assert(StringCalculator::Add("") == 0);
