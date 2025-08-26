@@ -39,24 +39,18 @@ private:
 static std::vector<std::string> parseDelimiters(const std::string& delimiterPart) {
     if (delimiterPart.empty()) return {","};
 
+    if (delimiterPart[0] != '[') return {delimiterPart};
+
     std::vector<std::string> result;
-
-    if (delimiterPart[0] == '[') {
-        size_t pos = 0;
-        while (true) {
-            size_t start = delimiterPart.find('[', pos);
-            size_t end = delimiterPart.find(']', start);
-            if (start == std::string::npos || end == std::string::npos) break;
-
-            result.push_back(delimiterPart.substr(start + 1, end - start - 1));
-            pos = end + 1;
-        }
-    } else {
-        // Single char delimiter, no conditional branch needed here
-        result.push_back(delimiterPart);
+    size_t pos = 0;
+    while (true) {
+        size_t start = delimiterPart.find('[', pos);
+        size_t end = delimiterPart.find(']', start);
+        if (start == std::string::npos || end == std::string::npos) break;
+        result.push_back(delimiterPart.substr(start + 1, end - start - 1));
+        pos = end + 1;
     }
-    return result;
-}
+    
 
     // Split by multiple delimiters one by one
     static std::vector<std::string> splitNumbers(const std::string& str, const std::vector<std::string>& delimiters) {
