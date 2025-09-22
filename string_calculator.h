@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
 #include <stdexcept>
 #include <sstream>
 
@@ -87,28 +88,30 @@ class StringCalculator {
        std::vector<std::string> tokens;
        size_t start = 0;
    
-       auto findClosestDelimiter = [&](size_t pos, std::string& outDelim) -> size_t {
+       while (start < str.size()) {
            size_t closestPos = std::string::npos;
+           size_t closestDelimLen = 0;
+   
            for (const auto& delim : delimiters) {
-               size_t delimPos = str.find(delim, pos);
-               if (delimPos != std::string::npos && (closestPos == std::string::npos || delimPos < closestPos)) {
-                   closestPos = delimPos;
-                   outDelim = delim;
+               if (delim.empty()) continue; // skip empty delimiters
+   
+               auto it = std::search(str.begin() + start, str.end(), delim.begin(), delim.end());
+               if (it != str.end()) {
+                   size_t pos = std::distance(str.begin(), it);
+                   if (closestPos == std::string::npos || pos < closestPos) {
+                       closestPos = pos;
+                       closestDelimLen = delim.length();
+                   }
                }
            }
-           return closestPos;
-       };
    
-       while (start < str.length()) {
-           std::string closestDelim;
-           size_t closestPos = findClosestDelimiter(start, closestDelim);
            if (closestPos == std::string::npos) {
                tokens.push_back(str.substr(start));
                break;
            }
    
            tokens.push_back(str.substr(start, closestPos - start));
-           start = closestPos + closestDelim.length();
+           start = closestPos + closestDelimLen;
        }
    
        return tokens;
