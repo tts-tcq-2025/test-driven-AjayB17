@@ -1,5 +1,5 @@
-#ifndef TDD_CPP_H_
-#define TDD_CPP_H_
+#ifndef TDD_H_
+#define TDD_H_
 #include <cassert>
 #include <iostream>
 #include <string>
@@ -101,4 +101,4 @@ class StringCalculator {
         return tokens;
     }
 };
-#endif  // TDD_CPP_H_
+#endif  // TDD_H_
