@@ -44,13 +44,18 @@ class StringCalculator {
         }
     }
     static void checkNegatives(const std::vector<int>& negatives) {
-        if (!negatives.empty()) {  // 1 decision
+        if (!negatives.empty()) {
             std::ostringstream oss;
             oss << "negatives not allowed: ";
-            for (size_t i = 0; i < negatives.size(); ++i) {
-                if (i > 0) oss << ",";
-                oss << negatives[i];
+    
+            // Use a simple flag or iterator-based approach to avoid 'if' inside the loop
+            auto it = negatives.begin();
+            oss << *it;  // first element
+    
+            for (++it; it != negatives.end(); ++it) {
+                oss << "," << *it;
             }
+    
             throw std::runtime_error(oss.str());
         }
     }
@@ -77,30 +82,36 @@ class StringCalculator {
      }
      return result;
    }
-    static std::vector<std::string> split(const std::string& str,
-        const std::vector<std::string>& delimiters) {
-        std::vector<std::string> tokens;
-        size_t start = 0;
-        while (start < str.length()) {
-            size_t closestPos = std::string::npos;
-            std::string closestDelim;
-            for (const auto& delim : delimiters) {
-                size_t delimPos = str.find(delim, start);
-                if (delimPos != std::string::npos &&
-                    (closestPos == std::string::npos || delimPos < closestPos)) {
-                    closestPos = delimPos;
-                    closestDelim = delim;
-                }
-            }
-            if (closestPos == std::string::npos) {
-                tokens.push_back(str.substr(start));
-                break;
-            } else {
-                tokens.push_back(str.substr(start, closestPos - start));
-                start = closestPos + closestDelim.length();
-            }
-        }
-        return tokens;
-    }
+   static std::vector<std::string> split(const std::string& str,
+                                         const std::vector<std::string>& delimiters) {
+       std::vector<std::string> tokens;
+       size_t start = 0;
+   
+       auto findClosestDelimiter = [&](size_t pos, std::string& outDelim) -> size_t {
+           size_t closestPos = std::string::npos;
+           for (const auto& delim : delimiters) {
+               size_t delimPos = str.find(delim, pos);
+               if (delimPos != std::string::npos && (closestPos == std::string::npos || delimPos < closestPos)) {
+                   closestPos = delimPos;
+                   outDelim = delim;
+               }
+           }
+           return closestPos;
+       };
+   
+       while (start < str.length()) {
+           std::string closestDelim;
+           size_t closestPos = findClosestDelimiter(start, closestDelim);
+           if (closestPos == std::string::npos) {
+               tokens.push_back(str.substr(start));
+               break;
+           }
+   
+           tokens.push_back(str.substr(start, closestPos - start));
+           start = closestPos + closestDelim.length();
+       }
+   
+       return tokens;
+   }
 };
 #endif  // STRING_CALCULATOR_H_
