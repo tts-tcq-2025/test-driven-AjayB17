@@ -1,10 +1,10 @@
+#include "./string_calculator.h"
 #include <cassert>
 #include <iostream>
 #include <string>
 #include <vector>
 #include <stdexcept>
 #include <sstream>
-#include "master/string_calculator.h"
 
 void testEmptyStringReturnsZero() {
     assert(StringCalculator::Add("") == 0);
