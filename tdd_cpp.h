@@ -21,6 +21,7 @@ class StringCalculator {
         }
         return calculateSum(numbersPart, delimiters);
     }
+
  private:
     static int calculateSum(const std::string& numbersPart, 
         const std::vector<std::string>& delimiters) {
@@ -100,3 +101,4 @@ class StringCalculator {
         return tokens;
     }
 };
+#endif
