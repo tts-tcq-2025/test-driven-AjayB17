@@ -1,10 +1,10 @@
-#include "tdd_cpp.h"
 #include <cassert>
 #include <iostream>
 #include <string>
 #include <vector>
 #include <stdexcept>
 #include <sstream>
+#include "tdd_cpp.h"
 
 void testEmptyStringReturnsZero() {
     assert(StringCalculator::Add("") == 0);
