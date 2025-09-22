@@ -64,17 +64,19 @@ class StringCalculator {
         return {delimiterPart};  // no decision here
     }
     static std::vector<std::string> parseMultipleDelimiters(const std::string& delimiterPart) {
-        std::vector<std::string> result;
-        size_t pos = 0;
-        while (pos < delimiterPart.length()) {
-            size_t start = delimiterPart.find('[', pos);
-            size_t end = delimiterPart.find(']', start);
-            if (start == std::string::npos || end == std::string::npos) break;
-            result.push_back(delimiterPart.substr(start + 1, end - start - 1));
-            pos = end + 1;
-        }
-        return result;
-    }
+     std::vector<std::string> result;
+     size_t pos = 0;
+     size_t start = delimiterPart.find('[', pos);
+     size_t end = delimiterPart.find(']', start);
+ 
+     while (start != std::string::npos && end != std::string::npos) {
+         result.push_back(delimiterPart.substr(start + 1, end - start - 1));
+         pos = end + 1;
+         start = delimiterPart.find('[', pos);
+         end = delimiterPart.find(']', start);
+     }
+     return result;
+   }
     static std::vector<std::string> split(const std::string& str,
         const std::vector<std::string>& delimiters) {
         std::vector<std::string> tokens;
