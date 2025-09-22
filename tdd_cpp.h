@@ -1,3 +1,4 @@
+#ifndef TDD_CPP_H_
 #include <cassert>
 #include <iostream>
 #include <string>
@@ -6,7 +7,7 @@
 #include <sstream>
 
 class StringCalculator {
-public:
+ public:
     static int Add(const std::string& input) {
         if (input.empty()) return 0;  // 1 decision
 
@@ -24,8 +25,9 @@ public:
         return calculateSum(numbersPart, delimiters);
     }
 
-private:
-    static int calculateSum(const std::string& numbersPart, const std::vector<std::string>& delimiters) {
+ private:
+    static int calculateSum(const std::string& numbersPart, 
+        const std::vector<std::string>& delimiters) {
         std::vector<std::string> tokens = split(numbersPart, delimiters);
         std::vector<int> negatives;
         int sum = 0;
@@ -90,7 +92,8 @@ private:
         return result;
     }
 
-    static std::vector<std::string> split(const std::string& str, const std::vector<std::string>& delimiters) {
+    static std::vector<std::string> split(const std::string& str, 
+        const std::vector<std::string>& delimiters) {
         std::vector<std::string> tokens;
         size_t start = 0;
 
@@ -100,7 +103,8 @@ private:
 
             for (const auto& delim : delimiters) {
                 size_t delimPos = str.find(delim, start);
-                if (delimPos != std::string::npos && (closestPos == std::string::npos || delimPos < closestPos)) {
+                if (delimPos != std::string::npos && 
+                    (closestPos == std::string::npos || delimPos < closestPos)) {
                     closestPos = delimPos;
                     closestDelim = delim;
                 }
