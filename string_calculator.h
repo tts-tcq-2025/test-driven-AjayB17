@@ -82,8 +82,6 @@ class StringCalculator {
       const std::vector<std::string>& delimiters) {
         std::vector<std::string> tokens;
         size_t start = 0;
-        size_t pos = std::string::npos;
-        size_t i = 0;
         while (start < str.length()) {
             size_t closestPos = std::string::npos;
             std::string closestDelim;
