@@ -77,8 +77,8 @@ class StringCalculator {
          end = delimiterPart.find(']', start);
      }
      return result;
-   }
-   static std::vector<std::string> split(const std::string& str,
+    }
+    static std::vector<std::string> split(const std::string& str,
       const std::vector<std::string>& delimiters) {
         std::vector<std::string> tokens;
         size_t start = 0;
