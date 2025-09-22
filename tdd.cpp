@@ -4,7 +4,7 @@
 #include <vector>
 #include <stdexcept>
 #include <sstream>
-#include "test-driven-AjayB17/tdd.h"
+#include "include/tdd.h"
 
 void testEmptyStringReturnsZero() {
     assert(StringCalculator::Add("") == 0);
