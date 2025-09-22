@@ -47,9 +47,9 @@ class StringCalculator {
     static void checkNegatives(const std::vector<int>& negatives) {
         if (!negatives.empty()) {
             std::ostringstream oss;
-            oss << "negatives not allowed: ";    
+            oss << "negatives not allowed: ";
             auto it = negatives.begin();
-            oss << *it;  
+            oss << *it;
             for (++it; it != negatives.end(); ++it) {
                 oss << "," << *it;
             }
@@ -78,7 +78,7 @@ class StringCalculator {
      }
      return result;
    }
-    static std::vector<std::string> split(const std::string& str,
+   static std::vector<std::string> split(const std::string& str,
       const std::vector<std::string>& delimiters) {
         std::vector<std::string> tokens;
         size_t start = 0;
@@ -89,7 +89,8 @@ class StringCalculator {
             std::string closestDelim;
             for (const auto& delim : delimiters) {
                 size_t delimPos = str.find(delim, start);
-                if (delimPos != std::string::npos && (closestPos == std::string::npos || delimPos < closestPos)) {
+                if (delimPos != std::string::npos &&
+                 (closestPos == std::string::npos || delimPos < closestPos)) {
                     closestPos = delimPos;
                     closestDelim = delim;
                 }
