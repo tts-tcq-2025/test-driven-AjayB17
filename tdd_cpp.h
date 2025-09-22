@@ -23,7 +23,7 @@ class StringCalculator {
     }
 
  private:
-    static int calculateSum(const std::string& numbersPart, 
+    static int calculateSum(const std::string& numbersPart,
         const std::vector<std::string>& delimiters) {
         std::vector<std::string> tokens = split(numbersPart, delimiters);
         std::vector<int> negatives;
@@ -75,7 +75,7 @@ class StringCalculator {
         }
         return result;
     }
-    static std::vector<std::string> split(const std::string& str, 
+    static std::vector<std::string> split(const std::string& str,
         const std::vector<std::string>& delimiters) {
         std::vector<std::string> tokens;
         size_t start = 0;
@@ -84,7 +84,7 @@ class StringCalculator {
             std::string closestDelim;
             for (const auto& delim : delimiters) {
                 size_t delimPos = str.find(delim, start);
-                if (delimPos != std::string::npos && 
+                if (delimPos != std::string::npos &&
                     (closestPos == std::string::npos || delimPos < closestPos)) {
                     closestPos = delimPos;
                     closestDelim = delim;
@@ -101,4 +101,4 @@ class StringCalculator {
         return tokens;
     }
 };
-#endif
+#endif  // TDD_CPP_H_
