@@ -8,76 +8,83 @@
 class StringCalculator {
 public:
     static int Add(const std::string& input) {
-        if (input.empty()) return 0;
+        if (input.empty()) return 0;  // 1 decision
 
         std::string numbersPart = input;
         std::vector<std::string> delimiters = {",", "\n"};
 
-        if (input.substr(0, 2) == "//") {
+        if (input.substr(0, 2) == "//") {  // 2nd decision
             size_t newlinePos = input.find('\n');
-            delimiters = parseDelimiters(input.substr(2, newlinePos - 2));
+            std::string delimiterPart = input.substr(2, newlinePos - 2);
             numbersPart = input.substr(newlinePos + 1);
+
+            delimiters = parseDelimiters(delimiterPart);
         }
 
-        std::vector<std::string> tokens = split(numbersPart, delimiters);
-        return calculateSum(tokens);
+        return calculateSum(numbersPart, delimiters);
     }
 
 private:
-    static int calculateSum(const std::vector<std::string>& tokens) {
+    static int calculateSum(const std::string& numbersPart, const std::vector<std::string>& delimiters) {
+        std::vector<std::string> tokens = split(numbersPart, delimiters);
         std::vector<int> negatives;
         int sum = 0;
 
         for (const auto& token : tokens) {
-            if (token.empty()) continue;
+            if (token.empty()) continue;  // 1 decision
 
             int num = std::stoi(token);
-            if (num < 0) {
-                negatives.push_back(num);
-            } else if (num <= 1000) {
-                sum += num;
-            }
+            processNumber(num, sum, negatives);  // extract logic to reduce complexity
         }
 
-        if (!negatives.empty()) {
-            throw std::runtime_error(formatNegatives(negatives));
-        }
+        checkNegatives(negatives);  // extract exception throwing
 
         return sum;
     }
 
-    static std::string formatNegatives(const std::vector<int>& negatives) {
-        std::ostringstream oss;
-        oss << "negatives not allowed: ";
-        for (size_t i = 0; i < negatives.size(); ++i) {
-            if (i > 0) oss << ",";
-            oss << negatives[i];
+    static void processNumber(int num, int& sum, std::vector<int>& negatives) {
+        if (num < 0) {  // 1 decision
+            negatives.push_back(num);
+        } else if (num <= 1000) {  // 2nd decision
+            sum += num;
         }
-        return oss.str();
     }
 
-    // Your original parseDelimiters and split unchanged:
+    static void checkNegatives(const std::vector<int>& negatives) {
+        if (!negatives.empty()) {  // 1 decision
+            std::ostringstream oss;
+            oss << "negatives not allowed: ";
+            for (size_t i = 0; i < negatives.size(); ++i) {
+                if (i > 0) oss << ",";
+                oss << negatives[i];
+            }
+            throw std::runtime_error(oss.str());
+        }
+    }
 
     static std::vector<std::string> parseDelimiters(const std::string& delimiterPart) {
-        std::vector<std::string> result;
-
         if (delimiterPart.empty()) {
-            return {","};
+            return {","};  // 1 decision
         }
 
-        if (delimiterPart[0] == '[') {
-            size_t pos = 0;
-            while (pos < delimiterPart.length()) {
-                size_t start = delimiterPart.find('[', pos);
-                size_t end = delimiterPart.find(']', start);
-                if (start == std::string::npos || end == std::string::npos) break;
+        if (delimiterPart[0] == '[') {  // 2nd decision
+            return parseMultipleDelimiters(delimiterPart);
+        }
 
-                std::string delim = delimiterPart.substr(start + 1, end - start - 1);
-                result.push_back(delim);
-                pos = end + 1;
-            }
-        } else {
-            result.push_back(delimiterPart);
+        return {delimiterPart};  // no decision here
+    }
+
+    static std::vector<std::string> parseMultipleDelimiters(const std::string& delimiterPart) {
+        std::vector<std::string> result;
+        size_t pos = 0;
+
+        while (pos < delimiterPart.length()) {
+            size_t start = delimiterPart.find('[', pos);
+            size_t end = delimiterPart.find(']', start);
+            if (start == std::string::npos || end == std::string::npos) break;
+
+            result.push_back(delimiterPart.substr(start + 1, end - start - 1));
+            pos = end + 1;
         }
 
         return result;
