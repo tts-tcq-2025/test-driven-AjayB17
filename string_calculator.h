@@ -8,7 +8,6 @@
 #include <sstream>
 
 class StringCalculator {
-
  public:
     static int Add(const std::string& input) {
         if (input.empty()) return 0;  // 1 decision
